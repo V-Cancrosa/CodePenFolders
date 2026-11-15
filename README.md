@@ -3,9 +3,14 @@
 Moja kolekcja efektów UI z [CodePen](https://codepen.io) do ponownego użycia w innych projektach:
 terminale (głównie z myślą o FoE) oraz guziki i efekty elementów (projekt z OBS).
 
-**Nie jestem autorem tych efektów.** Każdy folder to niezmieniony eksport pena z CodePen,
+**Nie jestem autorem tych efektów.** Każdy folder to eksport pena z CodePen,
 razem z oryginalnym plikiem `LICENSE.txt` (MIT) i `README.md` z linkiem do źródła.
 Wszystkie zasługi należą do autorów wymienionych poniżej.
+
+Jedyna zmiana względem oryginałów: z `dist/index.html` usunięto skrypt `prefixfree.js`
+(dodawał prefiksy CSS dla starych przeglądarek, dziś zbędne, a przy hostingu poza CodePen
+powodował błędy CORS). Dotyczy: Fallout 3 Terminal, Fallout Terminal CSS Theme,
+Animated Back Glow, Hover.css, Modal Animations.
 
 ## Podgląd
 
@@ -30,7 +35,7 @@ Każdy projekt ma ten sam układ:
 
 | Projekt | Autor | Oryginał | Uwagi |
 |---|---|---|---|
-| [Fallout 3 Terminal](terminals/fallout-3-terminal) | 32bitkid | [pen](https://codepen.io/32bitkid/pen/DrXOVg) | LESS + JS; usunięty zbędny prefixfree.js |
+| [Fallout 3 Terminal](terminals/fallout-3-terminal) | 32bitkid | [pen](https://codepen.io/32bitkid/pen/DrXOVg) | LESS + JS |
 | [Fallout Terminal CSS Theme](terminals/fallout-terminal-inspired-css-theme) | macktropolis | [pen](https://codepen.io/macktropolis/pen/vNMRpK) | prawie samo CSS |
 | [Terminal UI](terminals/terminal-ui) | arcticben | [pen](https://codepen.io/arcticben/pen/OWYyeo) | wymaga jQuery 2.1 + GSAP 1.19 (CDN) |
 | [Terminal](terminals/terminal) | ronaldsvilcins | [pen](https://codepen.io/ronaldsvilcins/pen/jPXBJO) | bez zależności |
