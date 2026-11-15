@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CodePen Things</title>
+<style>
+  :root {
+    --bg: #111418; --card: #1a1f26; --line: #2a313b; --text: #e6e9ee;
+    --muted: #8b95a3; --accent: #4fd18b; --accent2: #6aa8ff; --warn: #f0b350;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  header { padding: 28px 24px 8px; max-width: 1400px; margin: 0 auto; }
+  h1 { margin: 0 0 4px; font-size: 26px; }
+  header p { margin: 0; color: var(--muted); }
+  nav { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+  nav button { background: var(--card); color: var(--text); border: 1px solid var(--line);
+    padding: 6px 14px; border-radius: 999px; cursor: pointer; font: inherit; }
+  nav button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
+  main { max-width: 1400px; margin: 0 auto; padding: 16px 24px 48px; }
+  h2 { font-size: 18px; margin: 28px 0 12px; color: var(--muted); font-weight: 600;
+    text-transform: uppercase; letter-spacing: .08em; }
+  .grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
+    display: flex; flex-direction: column; }
+  .frame { position: relative; height: 280px; background: #000; border-bottom: 1px solid var(--line); overflow: hidden; }
+  .frame iframe { position: absolute; top: 0; left: 0; border: 0; width: 200%; height: 200%;
+    transform: scale(.5); transform-origin: 0 0; background: #fff; }
+  .body { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  .title { font-weight: 600; font-size: 16px; }
+  .meta { color: var(--muted); font-size: 13px; }
+  .note { font-size: 13px; }
+  .warn { color: var(--warn); font-size: 13px; }
+  .links { margin-top: auto; display: flex; gap: 14px; font-size: 13px; padding-top: 6px; }
+  .links a { color: var(--accent2); text-decoration: none; }
+  .links a:hover { text-decoration: underline; }
+  .tag { display: inline-block; font-size: 11px; padding: 1px 8px; border-radius: 999px;
+    border: 1px solid var(--line); color: var(--muted); margin-right: 4px; }
+  @media (max-width: 480px) {
+    header, main { padding-left: 16px; padding-right: 16px; }
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>CodePen Things</h1>
+  <p>Zebrane efekty z CodePen do ponownego użycia. Wszystko na licencji MIT – zostaw informację o autorze.</p>
+  <nav>
+    <button data-f="all" aria-pressed="true">Wszystko</button>
+    <button data-f="foe" aria-pressed="false">FoE</button>
+    <button data-f="obs" aria-pressed="false">OBS</button>
+  </nav>
+</header>
+<main id="main"></main>
+
+<script>
+const items = [
+  // Terminale
+  { cat: "terminals", dir: "fallout-3-terminal", name: "Fallout 3 Terminal", author: "32bitkid", pen: "https://codepen.io/32bitkid/pen/DrXOVg", tags: ["foe"], note: "Terminal w stylu Fallouta. LESS + JS." },
+  { cat: "terminals", dir: "fallout-terminal-inspired-css-theme", name: "Fallout Terminal CSS Theme", author: "macktropolis", pen: "https://codepen.io/macktropolis/pen/vNMRpK", tags: ["foe"], note: "Zielony motyw CRT, prawie samo CSS." },
+  { cat: "terminals", dir: "terminal-ui", name: "Terminal UI", author: "arcticben", pen: "https://codepen.io/arcticben/pen/OWYyeo", tags: ["foe"], note: "Font VT323, animacje.", warn: "Wymaga jQuery 2.1 i GSAP 1.19 z CDN (stare wersje)." },
+  { cat: "terminals", dir: "terminal", name: "Terminal", author: "ronaldsvilcins", pen: "https://codepen.io/ronaldsvilcins/pen/jPXBJO", tags: ["foe"], note: "Prosty terminal, bez zależności." },
+  { cat: "terminals", dir: "css-terminal-window", name: "CSS Terminal Window", author: "joshcummingsdesign", pen: "https://codepen.io/joshcummingsdesign/pen/qOKaWd", tags: ["foe", "obs"], note: "Okno terminala w czystym CSS." },
+  { cat: "terminals", dir: "termynal-js-a-lightweight-and-modern-animated-terminal-window", name: "termynal.js", author: "ines", pen: "https://codepen.io/ines/pen/MoaRYM", tags: ["foe", "obs"], note: "Animowane wpisywanie komend, lekkie." },
+  // Efekty
+  { cat: "effects", dir: "button-hover-effects", name: "Button Hover Effects", author: "kjbrum", pen: "https://codepen.io/kjbrum/pen/wBBLXx", tags: ["obs"] },
+  { cat: "effects", dir: "button-hover-effects-with-box-shadow", name: "Button Hover (box-shadow)", author: "giana", pen: "https://codepen.io/giana/pen/BZaGyP", tags: ["obs"] },
+  { cat: "effects", dir: "hover-css", name: "Hover.css", author: "Ian Lunn", pen: "https://codepen.io/IanLunn/pen/AxBReL", tags: ["obs"], note: "Duża biblioteka efektów najechania." },
+  { cat: "effects", dir: "animated-back-glow", name: "Animated Back Glow", author: "georgehastings", pen: "https://codepen.io/georgehastings/pen/xgwxgo", tags: ["obs"] },
+  { cat: "effects", dir: "neon-glass-context-menu", name: "Neon Glass Context Menu", author: "simeydotme", pen: "https://codepen.io/simeydotme/pen/PwwYZOe", tags: ["obs"], note: "Kliknij prawym przyciskiem w podglądzie." },
+  { cat: "effects", dir: "neumorphic-elements", name: "Neumorphic Elements", author: "myacode", pen: "https://codepen.io/myacode/pen/PoqQQNM", tags: ["obs"], warn: "Ładuje cudzy klucz Font Awesome Kit – podmień przy użyciu." },
+  { cat: "effects", dir: "modal-animations", name: "Modal Animations", author: "designcouch", pen: "https://codepen.io/designcouch/pen/obvKxm", tags: ["obs"] },
+  { cat: "effects", dir: "fancy-slider", name: "Fancy Slider", author: "suez", pen: "https://codepen.io/suez/pen/wMMgXp", tags: ["obs"] },
+  { cat: "effects", dir: "aosanimations", name: "AOS – animacje przy scrollu", author: "michalsnik", pen: "https://codepen.io/michalsnik/pen/WxNdvq", tags: ["obs"] },
+  { cat: "effects", dir: "subscribercoaster", name: "Subscriber Coaster", author: "cobra_winfrey", pen: "https://codepen.io/cobra_winfrey/pen/VwYBRvj", tags: ["obs"], note: "Dobry kandydat na nakładkę w OBS." },
+  { cat: "effects", dir: "three-dotscss-loading-animations-made-with-single-element", name: "Three Dots – loadery", author: "nzbin", pen: "https://codepen.io/nzbin/pen/GGrXbp", tags: ["obs", "foe"], note: "Wskaźniki ładowania z jednego elementu." },
+];
+
+const sections = { terminals: "Terminale", effects: "Guziki i efekty" };
+const main = document.getElementById("main");
+
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+
+function render(filter) {
+  main.innerHTML = "";
+  for (const [cat, label] of Object.entries(sections)) {
+    const list = items.filter(i => i.cat === cat && (filter === "all" || i.tags.includes(filter)));
+    if (!list.length) continue;
+    const h = document.createElement("h2"); h.textContent = label; main.appendChild(h);
+    const grid = document.createElement("div"); grid.className = "grid";
+    for (const i of list) {
+      const base = `${i.cat}/${i.dir}`;
+      grid.insertAdjacentHTML("beforeend", `
+        <article class="card">
+          <div class="frame"><iframe loading="lazy" src="${base}/dist/index.html" title="${esc(i.name)}"></iframe></div>
+          <div class="body">
+            <div class="title">${esc(i.name)}</div>
+            <div class="meta">autor: ${esc(i.author)} · ${i.tags.map(t => `<span class="tag">${t.toUpperCase()}</span>`).join("")}</div>
+            ${i.note ? `<div class="note">${esc(i.note)}</div>` : ""}
+            ${i.warn ? `<div class="warn">⚠ ${esc(i.warn)}</div>` : ""}
+            <div class="links">
+              <a href="${base}/dist/index.html" target="_blank">Otwórz</a>
+              <a href="${base}/src/" target="_blank">Źródło</a>
+              <a href="${i.pen}" target="_blank" rel="noopener">CodePen</a>
+            </div>
+          </div>
+        </article>`);
+    }
+    main.appendChild(grid);
+  }
+}
+
+document.querySelectorAll("nav button").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll("nav button").forEach(x => x.setAttribute("aria-pressed", x === b));
+  render(b.dataset.f);
+}));
+render("all");
+</script>
+</body>
+</html>
