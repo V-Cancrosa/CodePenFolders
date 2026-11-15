@@ -30,7 +30,7 @@ Każdy projekt ma ten sam układ:
 
 | Projekt | Autor | Oryginał | Uwagi |
 |---|---|---|---|
-| [Fallout 3 Terminal](terminals/fallout-3-terminal) | 32bitkid | [pen](https://codepen.io/32bitkid/pen/DrXOVg) | LESS + JS |
+| [Fallout 3 Terminal](terminals/fallout-3-terminal) | 32bitkid | [pen](https://codepen.io/32bitkid/pen/DrXOVg) | LESS + JS; usunięty zbędny prefixfree.js |
 | [Fallout Terminal CSS Theme](terminals/fallout-terminal-inspired-css-theme) | macktropolis | [pen](https://codepen.io/macktropolis/pen/vNMRpK) | prawie samo CSS |
 | [Terminal UI](terminals/terminal-ui) | arcticben | [pen](https://codepen.io/arcticben/pen/OWYyeo) | wymaga jQuery 2.1 + GSAP 1.19 (CDN) |
 | [Terminal](terminals/terminal) | ronaldsvilcins | [pen](https://codepen.io/ronaldsvilcins/pen/jPXBJO) | bez zależności |
