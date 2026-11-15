@@ -9,7 +9,9 @@ Wszystkie zasługi należą do autorów wymienionych poniżej.
 
 ## Podgląd
 
-Otwórz `index.html` przez lokalny serwer (np. `python -m http.server 8765` i wejdź na
+**Galeria online: https://v-cancrosa.github.io/CodePen_Things/**
+
+Lokalnie: otwórz `index.html` przez lokalny serwer (np. `python -m http.server 8765` i wejdź na
 `http://localhost:8765`), żeby zobaczyć wszystkie efekty w jednej galerii z filtrem FoE / OBS.
 
 ## Struktura
