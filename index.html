@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CodePen Things</title>
+<title>CodePenFolders</title>
 <style>
   :root {
     --bg: #111418; --card: #1a1f26; --line: #2a313b; --text: #e6e9ee;
@@ -19,6 +19,8 @@
   nav button { background: var(--card); color: var(--text); border: 1px solid var(--line);
     padding: 6px 14px; border-radius: 999px; cursor: pointer; font: inherit; }
   nav button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
+  nav .upload { margin-left: auto; color: var(--bg); background: var(--accent); padding: 6px 14px;
+    border-radius: 999px; text-decoration: none; font-weight: 600; }
   main { max-width: 1400px; margin: 0 auto; padding: 16px 24px 48px; }
   h2 { font-size: 18px; margin: 28px 0 12px; color: var(--muted); font-weight: 600;
     text-transform: uppercase; letter-spacing: .08em; }
@@ -46,45 +48,19 @@
 </head>
 <body>
 <header>
-  <h1>CodePen Things</h1>
+  <h1>CodePenFolders</h1>
   <p>Zebrane efekty z CodePen do ponownego użycia. Wszystko na licencji MIT – zostaw informację o autorze.</p>
   <nav>
     <button data-f="all" aria-pressed="true">Wszystko</button>
     <button data-f="foe" aria-pressed="false">FoE</button>
     <button data-f="obs" aria-pressed="false">OBS</button>
+    <a class="upload" href="upload.html">+ Dodaj ZIP</a>
   </nav>
 </header>
 <main id="main"></main>
 
 <script>
-const items = [
-  // Terminale
-  { cat: "terminals", dir: "fallout-3-terminal", name: "Fallout 3 Terminal", author: "32bitkid", pen: "https://codepen.io/32bitkid/pen/DrXOVg", tags: ["foe"], note: "Terminal w stylu Fallouta. LESS + JS." },
-  { cat: "terminals", dir: "fallout-terminal-inspired-css-theme", name: "Fallout Terminal CSS Theme", author: "macktropolis", pen: "https://codepen.io/macktropolis/pen/vNMRpK", tags: ["foe"], note: "Zielony motyw CRT, prawie samo CSS." },
-  { cat: "terminals", dir: "terminal-ui", name: "Terminal UI", author: "arcticben", pen: "https://codepen.io/arcticben/pen/OWYyeo", tags: ["foe"], note: "Font VT323, animacje.", warn: "Wymaga jQuery 2.1 i GSAP 1.19 z CDN (stare wersje)." },
-  { cat: "terminals", dir: "terminal", name: "Terminal", author: "ronaldsvilcins", pen: "https://codepen.io/ronaldsvilcins/pen/jPXBJO", tags: ["foe"], note: "Prosty terminal, bez zależności." },
-  { cat: "terminals", dir: "css-terminal-window", name: "CSS Terminal Window", author: "joshcummingsdesign", pen: "https://codepen.io/joshcummingsdesign/pen/qOKaWd", tags: ["foe", "obs"], note: "Okno terminala w czystym CSS." },
-  { cat: "terminals", dir: "termynal-js-a-lightweight-and-modern-animated-terminal-window", name: "termynal.js", author: "ines", pen: "https://codepen.io/ines/pen/MoaRYM", tags: ["foe", "obs"], note: "Animowane wpisywanie komend, lekkie." },
-  // Efekty
-  { cat: "effects", dir: "button-hover-effects", name: "Button Hover Effects", author: "kjbrum", pen: "https://codepen.io/kjbrum/pen/wBBLXx", tags: ["obs"] },
-  { cat: "effects", dir: "button-hover-effects-with-box-shadow", name: "Button Hover (box-shadow)", author: "giana", pen: "https://codepen.io/giana/pen/BZaGyP", tags: ["obs"] },
-  { cat: "effects", dir: "hover-css", name: "Hover.css", author: "Ian Lunn", pen: "https://codepen.io/IanLunn/pen/AxBReL", tags: ["obs"], note: "Duża biblioteka efektów najechania." },
-  { cat: "effects", dir: "animated-back-glow", name: "Animated Back Glow", author: "georgehastings", pen: "https://codepen.io/georgehastings/pen/xgwxgo", tags: ["obs"] },
-  { cat: "effects", dir: "neon-glass-context-menu", name: "Neon Glass Context Menu", author: "simeydotme", pen: "https://codepen.io/simeydotme/pen/PwwYZOe", tags: ["obs"], note: "Kliknij prawym przyciskiem w podglądzie." },
-  { cat: "effects", dir: "neumorphic-elements", name: "Neumorphic Elements", author: "myacode", pen: "https://codepen.io/myacode/pen/PoqQQNM", tags: ["obs"], warn: "Ładuje cudzy klucz Font Awesome Kit – podmień przy użyciu." },
-  { cat: "effects", dir: "modal-animations", name: "Modal Animations", author: "designcouch", pen: "https://codepen.io/designcouch/pen/obvKxm", tags: ["obs"] },
-  { cat: "effects", dir: "fancy-slider", name: "Fancy Slider", author: "suez", pen: "https://codepen.io/suez/pen/wMMgXp", tags: ["obs"] },
-  { cat: "effects", dir: "aosanimations", name: "AOS – animacje przy scrollu", author: "michalsnik", pen: "https://codepen.io/michalsnik/pen/WxNdvq", tags: ["obs"] },
-  { cat: "effects", dir: "subscribercoaster", name: "Subscriber Coaster", author: "cobra_winfrey", pen: "https://codepen.io/cobra_winfrey/pen/VwYBRvj", tags: ["obs"], note: "Dobry kandydat na nakładkę w OBS." },
-  { cat: "effects", dir: "three-dotscss-loading-animations-made-with-single-element", name: "Three Dots – loadery", author: "nzbin", pen: "https://codepen.io/nzbin/pen/GGrXbp", tags: ["obs", "foe"], note: "Wskaźniki ładowania z jednego elementu." },
-  { cat: "effects", dir: "pure-css-border-animation-without-svg", name: "Border Animation (CSS)", author: "Rplus", pen: "https://codepen.io/Rplus/pen/abPLGx", tags: ["obs"], note: "Animowana ramka z jednego elementu, bez SVG." },
-  // Formularze
-  { cat: "forms", dir: "credit-card-payment-form", name: "Credit Card Payment Form", author: "quinlo", pen: "https://codepen.io/quinlo/pen/YONMEa", tags: [], note: "Maski pól (imask.js) i karta SVG zmieniająca się przy wpisywaniu. Niczego nie wysyła.", warn: "Wymaga imask.js 3.4 z CDN (stara wersja)." },
-  // Demo
-  { cat: "demos", dir: "how-browsers-has", name: "how browsers :has()", author: "jh3y", pen: "https://codepen.io/jh3y/pen/xbqmjgW", tags: [], note: "Interaktywne wyjaśnienie, jak przeglądarka obsługuje selektor :has()." },
-];
-
-const sections = { terminals: "Terminale", effects: "Guziki i efekty", forms: "Formularze", demos: "Demo i ciekawostki" };
+let items = [], sections = {};
 const main = document.getElementById("main");
 
 function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
@@ -122,7 +98,10 @@ document.querySelectorAll("nav button").forEach(b => b.addEventListener("click",
   document.querySelectorAll("nav button").forEach(x => x.setAttribute("aria-pressed", x === b));
   render(b.dataset.f);
 }));
-render("all");
+fetch("items.json", { cache: "no-cache" })
+  .then(r => r.json())
+  .then(data => { items = data.items; sections = data.categories; render("all"); })
+  .catch(() => { main.textContent = "Nie udało się wczytać items.json – otwórz galerię przez serwer (np. python -m http.server)."; });
 </script>
 </body>
 </html>

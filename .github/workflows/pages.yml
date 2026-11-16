@@ -1,0 +1,80 @@
+# Przy każdym pushu na main:
+#   1. rozpakowuje nowe ZIP-y z inbox/ (tools/process_inbox.py) i commituje wynik,
+#   2. publikuje galerię na GitHub Pages.
+name: Przetwórz ZIP-y i opublikuj galerię
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      inbox_failed: ${{ steps.inbox.outputs.failed }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Rozpakuj ZIP-y z inbox/
+        id: inbox
+        env:
+          PYTHONIOENCODING: utf-8
+        run: |
+          set +e
+          python -I tools/process_inbox.py | tee -a "$GITHUB_STEP_SUMMARY"
+          code=${PIPESTATUS[0]}
+          if [ "$code" -ne 0 ]; then echo "failed=true" >> "$GITHUB_OUTPUT"; fi
+          exit 0
+
+      - name: Zapisz zmiany w repo
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "Brak zmian do zapisania."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Automat: rozpakowano ZIP-y z inbox/"
+          for attempt in 1 2 3; do
+            git pull --rebase origin main && git push origin HEAD:main && exit 0
+            sleep 5
+          done
+          echo "Nie udało się wypchnąć zmian." >&2
+          exit 1
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Zgłoś wadliwe ZIP-y
+        if: needs.build.outputs.inbox_failed == 'true'
+        run: |
+          echo "::error::Część ZIP-ów była wadliwa - leżą w inbox/_bledy/ razem z opisem problemu."
+          exit 1

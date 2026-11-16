@@ -1,4 +1,4 @@
-# CodePen Things
+# CodePenFolders
 
 Moja kolekcja efektów UI z [CodePen](https://codepen.io) do ponownego użycia w innych projektach:
 terminale (głównie z myślą o FoE) oraz guziki i efekty elementów (projekt z OBS).
@@ -7,69 +7,81 @@ terminale (głównie z myślą o FoE) oraz guziki i efekty elementów (projekt z
 razem z oryginalnym plikiem `LICENSE.txt` (MIT) i `README.md` z linkiem do źródła.
 Wszystkie zasługi należą do autorów wymienionych poniżej.
 
-Jedyna zmiana względem oryginałów: z `dist/index.html` usunięto skrypt `prefixfree.js`
+Jedyna zmiana względem oryginałów: z `dist/index.html` usuwany jest skrypt `prefixfree.js`
 (dodawał prefiksy CSS dla starych przeglądarek, dziś zbędne, a przy hostingu poza CodePen
-powodował błędy CORS). Dotyczy: Fallout 3 Terminal, Fallout Terminal CSS Theme,
-Animated Back Glow, Hover.css, Modal Animations, Border Animation.
+powodował błędy CORS).
 
 ## Podgląd
 
-**Galeria online: https://v-cancrosa.github.io/CodePen_Things/**
+**Galeria online: https://v-cancrosa.github.io/CodePenFolders/**
 
-Lokalnie: otwórz `index.html` przez lokalny serwer (np. `python -m http.server 8765` i wejdź na
-`http://localhost:8765`), żeby zobaczyć wszystkie efekty w jednej galerii z filtrem FoE / OBS.
+Lokalnie: uruchom `python -m http.server 8765` w tym folderze i wejdź na `http://localhost:8765`.
+
+## Dodawanie nowych penów
+
+1. Na CodePen: **Export → Export .zip**.
+2. Na stronie [Dodaj ZIP](https://v-cancrosa.github.io/CodePenFolders/upload.html) wybierz kategorię, tagi
+   i upuść pliki (wymaga jednorazowego tokenu GitHub – instrukcja jest na tej stronie).
+   Można też wrzucić ZIP ręcznie na GitHubie do `inbox/<kategoria>/`.
+3. GitHub Actions (`.github/workflows/pages.yml`) uruchamia `tools/process_inbox.py`:
+   rozpakowuje ZIP do `<kategoria>/<nazwa>/`, usuwa `prefixfree.js`, dopisuje pen do `items.json`
+   i tabel poniżej, a potem publikuje galerię. Trwa to około minuty.
+   Wadliwe paczki trafiają do `inbox/_bledy/` z opisem problemu.
 
 ## Struktura
 
-Każdy projekt ma ten sam układ:
-
 ```
+items.json                # lista penów, z której korzysta galeria
 <kategoria>/<nazwa>/
-├── src/        # kod źródłowy (SCSS / LESS / CSS, HTML, JS)
-├── dist/       # gotowy, skompilowany HTML / CSS / JS
-├── README.md   # link do oryginalnego pena
-└── LICENSE.txt # licencja MIT autora
+├── src/                  # kod źródłowy (SCSS / LESS / Pug / CSS, HTML, JS)
+├── dist/                 # gotowy HTML / CSS / JS
+├── README.md             # link do oryginalnego pena
+└── LICENSE.txt           # licencja MIT autora
 ```
+
+<!-- items:start -->
 
 ## Terminale
 
 | Projekt | Autor | Oryginał | Uwagi |
 |---|---|---|---|
-| [Fallout 3 Terminal](terminals/fallout-3-terminal) | 32bitkid | [pen](https://codepen.io/32bitkid/pen/DrXOVg) | LESS + JS |
-| [Fallout Terminal CSS Theme](terminals/fallout-terminal-inspired-css-theme) | macktropolis | [pen](https://codepen.io/macktropolis/pen/vNMRpK) | prawie samo CSS |
-| [Terminal UI](terminals/terminal-ui) | arcticben | [pen](https://codepen.io/arcticben/pen/OWYyeo) | wymaga jQuery 2.1 + GSAP 1.19 (CDN) |
-| [Terminal](terminals/terminal) | ronaldsvilcins | [pen](https://codepen.io/ronaldsvilcins/pen/jPXBJO) | bez zależności |
-| [CSS Terminal Window](terminals/css-terminal-window) | joshcummingsdesign | [pen](https://codepen.io/joshcummingsdesign/pen/qOKaWd) | czyste CSS |
-| [termynal.js](terminals/termynal-js-a-lightweight-and-modern-animated-terminal-window) | ines | [pen](https://codepen.io/ines/pen/MoaRYM) | animowane wpisywanie komend |
+| [Fallout 3 Terminal](terminals/fallout-3-terminal) | 32bitkid | [pen](https://codepen.io/32bitkid/pen/DrXOVg) | Terminal w stylu Fallouta. LESS + JS. |
+| [Fallout Terminal CSS Theme](terminals/fallout-terminal-inspired-css-theme) | macktropolis | [pen](https://codepen.io/macktropolis/pen/vNMRpK) | Zielony motyw CRT, prawie samo CSS. |
+| [Terminal UI](terminals/terminal-ui) | arcticben | [pen](https://codepen.io/arcticben/pen/OWYyeo) | Font VT323, animacje. ⚠ Wymaga jQuery 2.1 i GSAP 1.19 z CDN (stare wersje). |
+| [Terminal](terminals/terminal) | ronaldsvilcins | [pen](https://codepen.io/ronaldsvilcins/pen/jPXBJO) | Prosty terminal, bez zależności. |
+| [CSS Terminal Window](terminals/css-terminal-window) | joshcummingsdesign | [pen](https://codepen.io/joshcummingsdesign/pen/qOKaWd) | Okno terminala w czystym CSS. |
+| [termynal.js](terminals/termynal-js-a-lightweight-and-modern-animated-terminal-window) | ines | [pen](https://codepen.io/ines/pen/MoaRYM) | Animowane wpisywanie komend, lekkie. |
 
 ## Guziki i efekty
 
 | Projekt | Autor | Oryginał | Uwagi |
 |---|---|---|---|
-| [Button Hover Effects](effects/button-hover-effects) | kjbrum | [pen](https://codepen.io/kjbrum/pen/wBBLXx) | |
-| [Button Hover (box-shadow)](effects/button-hover-effects-with-box-shadow) | giana | [pen](https://codepen.io/giana/pen/BZaGyP) | |
-| [Hover.css](effects/hover-css) | Ian Lunn | [pen](https://codepen.io/IanLunn/pen/AxBReL) | pełna biblioteka: [IanLunn/Hover](https://github.com/IanLunn/Hover) |
-| [Animated Back Glow](effects/animated-back-glow) | georgehastings | [pen](https://codepen.io/georgehastings/pen/xgwxgo) | |
-| [Neon Glass Context Menu](effects/neon-glass-context-menu) | simeydotme | [pen](https://codepen.io/simeydotme/pen/PwwYZOe) | |
-| [Neumorphic Elements](effects/neumorphic-elements) | myacode | [pen](https://codepen.io/myacode/pen/PoqQQNM) | ładuje cudzy Font Awesome Kit – podmień przy użyciu |
-| [Modal Animations](effects/modal-animations) | designcouch | [pen](https://codepen.io/designcouch/pen/obvKxm) | |
-| [Fancy Slider](effects/fancy-slider) | suez | [pen](https://codepen.io/suez/pen/wMMgXp) | |
-| [AOS – animacje przy scrollu](effects/aosanimations) | michalsnik | [pen](https://codepen.io/michalsnik/pen/WxNdvq) | |
-| [Subscriber Coaster](effects/subscribercoaster) | cobra_winfrey | [pen](https://codepen.io/cobra_winfrey/pen/VwYBRvj) | |
-| [Three Dots – loadery](effects/three-dotscss-loading-animations-made-with-single-element) | nzbin | [pen](https://codepen.io/nzbin/pen/GGrXbp) | pełna biblioteka: [nzbin/three-dots](https://github.com/nzbin/three-dots) |
-| [Border Animation (CSS)](effects/pure-css-border-animation-without-svg) | Rplus | [pen](https://codepen.io/Rplus/pen/abPLGx) | źródło w Pug + SCSS |
+| [Button Hover Effects](effects/button-hover-effects) | kjbrum | [pen](https://codepen.io/kjbrum/pen/wBBLXx) |  |
+| [Button Hover (box-shadow)](effects/button-hover-effects-with-box-shadow) | giana | [pen](https://codepen.io/giana/pen/BZaGyP) |  |
+| [Hover.css](effects/hover-css) | Ian Lunn | [pen](https://codepen.io/IanLunn/pen/AxBReL) | Duża biblioteka efektów najechania. Pełna wersja: github.com/IanLunn/Hover |
+| [Animated Back Glow](effects/animated-back-glow) | georgehastings | [pen](https://codepen.io/georgehastings/pen/xgwxgo) |  |
+| [Neon Glass Context Menu](effects/neon-glass-context-menu) | simeydotme | [pen](https://codepen.io/simeydotme/pen/PwwYZOe) | Kliknij prawym przyciskiem w podglądzie. |
+| [Neumorphic Elements](effects/neumorphic-elements) | myacode | [pen](https://codepen.io/myacode/pen/PoqQQNM) | ⚠ Ładuje cudzy klucz Font Awesome Kit – podmień przy użyciu. |
+| [Modal Animations](effects/modal-animations) | designcouch | [pen](https://codepen.io/designcouch/pen/obvKxm) |  |
+| [Fancy Slider](effects/fancy-slider) | suez | [pen](https://codepen.io/suez/pen/wMMgXp) |  |
+| [AOS – animacje przy scrollu](effects/aosanimations) | michalsnik | [pen](https://codepen.io/michalsnik/pen/WxNdvq) |  |
+| [Subscriber Coaster](effects/subscribercoaster) | cobra_winfrey | [pen](https://codepen.io/cobra_winfrey/pen/VwYBRvj) | Dobry kandydat na nakładkę w OBS. |
+| [Three Dots – loadery](effects/three-dotscss-loading-animations-made-with-single-element) | nzbin | [pen](https://codepen.io/nzbin/pen/GGrXbp) | Wskaźniki ładowania z jednego elementu. Pełna wersja: github.com/nzbin/three-dots |
+| [Border Animation (CSS)](effects/pure-css-border-animation-without-svg) | Rplus | [pen](https://codepen.io/Rplus/pen/abPLGx) | Animowana ramka z jednego elementu, bez SVG. |
 
 ## Formularze
 
 | Projekt | Autor | Oryginał | Uwagi |
 |---|---|---|---|
-| [Credit Card Payment Form](forms/credit-card-payment-form) | quinlo | [pen](https://codepen.io/quinlo/pen/YONMEa) | wymaga imask.js 3.4 (CDN); tylko UI, niczego nie wysyła |
+| [Credit Card Payment Form](forms/credit-card-payment-form) | quinlo | [pen](https://codepen.io/quinlo/pen/YONMEa) | Maski pól (imask.js) i karta SVG zmieniająca się przy wpisywaniu. Niczego nie wysyła. ⚠ Wymaga imask.js 3.4 z CDN (stara wersja). |
 
 ## Demo i ciekawostki
 
 | Projekt | Autor | Oryginał | Uwagi |
 |---|---|---|---|
-| [how browsers :has()](demos/how-browsers-has) | jh3y | [pen](https://codepen.io/jh3y/pen/xbqmjgW) | interaktywne wyjaśnienie selektora `:has()` |
+| [how browsers :has()](demos/how-browsers-has) | jh3y | [pen](https://codepen.io/jh3y/pen/xbqmjgW) | Interaktywne wyjaśnienie, jak przeglądarka obsługuje selektor :has(). |
+
+<!-- items:end -->
 
 ## Licencja
 
