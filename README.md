@@ -66,7 +66,7 @@ items.json                # lista penów, z której korzysta galeria
 | [Fancy Slider](effects/fancy-slider) | suez | [pen](https://codepen.io/suez/pen/wMMgXp) |  |
 | [AOS – animacje przy scrollu](effects/aosanimations) | michalsnik | [pen](https://codepen.io/michalsnik/pen/WxNdvq) |  |
 | [Subscriber Coaster](effects/subscribercoaster) | cobra_winfrey | [pen](https://codepen.io/cobra_winfrey/pen/VwYBRvj) | Dobry kandydat na nakładkę w OBS. |
-| [Three Dots – loadery](effects/three-dotscss-loading-animations-made-with-single-element) | nzbin | [pen](https://codepen.io/nzbin/pen/GGrXbp) | Wskaźniki ładowania z jednego elementu. Pełna wersja: github.com/nzbin/three-dots |
+| [Three Dots – loadery](effects/three-dotscss-loading-animations-made-with-single-element) | nzbin | [pen](https://codepen.io/nzbin/pen/GGrXbp) | Wskaźniki ładowania z jednego elementu. Pełna wersja: github.com/nzbin/three-dots ⚠ Ładuje z CDN: clipboard 2.0.11. |
 | [Border Animation (CSS)](effects/pure-css-border-animation-without-svg) | Rplus | [pen](https://codepen.io/Rplus/pen/abPLGx) | Animowana ramka z jednego elementu, bez SVG. |
 
 ## Formularze
