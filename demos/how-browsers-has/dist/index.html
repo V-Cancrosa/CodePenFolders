@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>how browsers :has() 🧑‍🔬</title>
+    <link rel="stylesheet" href="https://public.codepenassets.com/css/normalize-5.0.0.min.css">
+<link rel="stylesheet" href="./style.css">
+
+  </head>
+    
+  <body>
+  <a class="skip" href="#shape">Skip to the drawings</a>
+
+  <!-- Shared SVG paint servers and markers for every drawing on the page. -->
+  <svg class="defs" aria-hidden="true" focusable="false" width="0" height="0">
+    <defs>
+      <pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+        <rect class="hatch-bg" width="7" height="7"/>
+        <line class="hatch-line" x1="0" y1="0" x2="0" y2="7"/>
+      </pattern>
+      <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path class="arrow-head" d="M0 0 L10 5 L0 10 z"/>
+      </marker>
+      <marker id="arrow-cyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path class="arrow-head arrow-head--cyan" d="M0 0 L10 5 L0 10 z"/>
+      </marker>
+      <marker id="arrow-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path class="arrow-head arrow-head--amber" d="M0 0 L10 5 L0 10 z"/>
+      </marker>
+      <marker id="tick" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="10" markerHeight="10" orient="auto">
+        <path class="tick-mark" d="M5 0 V10"/>
+      </marker>
+    </defs>
+  </svg>
+
+  <main class="doc">
+
+    <!-- ============================== SHEET 01 ============================== -->
+    <header class="sheet sheet--hero" id="top">
+      <div class="strip"><span class="strip__no">01</span><span class="strip__title">Title</span><span class="strip__ref">HAS-001 · Sheet 01 / 11</span></div>
+
+      <div class="hero">
+        <div class="hero__copy">
+          <p class="kicker">A field guide to <code>:has()</code> invalidation in Chrome, Firefox and Safari</p>
+          <h1>How browsers <span class="nowrap">re-check</span> <span class="h1-code">:has()</span></h1>
+          <p class="lede">Why one small change can restyle a whole page, drawn out step by step. Scope your rules and every browser does less work. Chrome gains the most.</p>
+          <p class="callout"><span class="callout__tag">Note 1</span><span><code>:has()</code> news travels up. In Chrome, the to-do list is shared too.</span></p>
+          <nav class="hero__nav" aria-label="On this page">
+            <a href="#shape">See the drawings</a>
+            <a href="#measured">Measured</a>
+            <a href="#rules">Rules of thumb</a>
+          </nav>
+        </div>
+
+        <figure class="hero__figure">
+          <svg class="hero-svg" viewBox="0 0 560 470" aria-hidden="true">
+            <!-- body -->
+            <rect class="hx-box" x="16" y="34" width="528" height="372"/>
+            <rect class="hx-tab" x="30" y="23" width="58" height="22"/>
+            <text class="hx-tabtext" x="40" y="39">body</text>
+            <!-- main -->
+            <rect class="hx-box" x="44" y="76" width="472" height="304"/>
+            <rect class="hx-tab" x="58" y="65" width="58" height="22"/>
+            <text class="hx-tabtext" x="68" y="81">main</text>
+            <!-- content in main: some of it lands on the shared list -->
+            <rect class="hx-el" x="72" y="112" width="196" height="26"/>
+            <rect class="hx-el hx-el--hit" x="72" y="150" width="196" height="26"/>
+            <rect class="hx-el" x="72" y="188" width="196" height="26"/>
+            <rect class="hx-el hx-el--hit" x="72" y="226" width="196" height="26"/>
+            <rect class="hx-el" x="72" y="264" width="196" height="26"/>
+            <rect class="hx-el hx-el--hit" x="72" y="302" width="196" height="26"/>
+            <rect class="hx-el" x="72" y="340" width="120" height="20"/>
+            <!-- .tab -->
+            <rect class="hx-box" x="296" y="112" width="196" height="242"/>
+            <rect class="hx-tab" x="310" y="101" width="50" height="22"/>
+            <text class="hx-tabtext" x="319" y="117">.tab</text>
+            <rect class="hx-el" x="314" y="144" width="160" height="26"/>
+            <rect class="hx-el" x="314" y="182" width="160" height="26"/>
+            <rect class="hx-el" x="314" y="220" width="160" height="26"/>
+            <rect class="hx-el hx-el--change" x="314" y="258" width="160" height="26"/>
+            <text class="hx-delta" x="460" y="276" text-anchor="middle">Δ</text>
+            <rect class="hx-el" x="314" y="296" width="160" height="26"/>
+            <!-- the walk -->
+            <path class="hx-walk" d="M394 256 V40" marker-end="url(#arrow-cyan)"/>
+            <circle class="hx-stop" cx="394" cy="112" r="5"/>
+            <circle class="hx-stop" cx="394" cy="76" r="5"/>
+            <circle class="hx-stop hx-stop--quiet" cx="394" cy="34" r="5"/>
+            <!-- callouts -->
+            <g class="hx-callout"><circle cx="512" cy="271" r="12"/><text x="512" y="276" text-anchor="middle">1</text></g>
+            <path class="hx-leader" d="M500 271 H476"/>
+            <g class="hx-callout"><circle cx="430" cy="160" r="12"/><text x="430" y="165" text-anchor="middle">2</text></g>
+            <path class="hx-leader" d="M418 160 H398"/>
+            <g class="hx-callout"><circle cx="58" cy="420" r="12"/><text x="58" y="425" text-anchor="middle">3</text></g>
+            <path class="hx-leader" d="M66 411 L84 330"/>
+            <!-- dimension: what a sweep can cover when the anchor is body -->
+            <path class="hx-dim" d="M16 446 H544" marker-start="url(#tick)" marker-end="url(#tick)"/>
+            <text class="hx-dimtext" x="280" y="440" text-anchor="middle">the whole page, if the anchor is body</text>
+          </svg>
+          <figcaption class="figcap">
+            <span><b>1</b> A class changes.</span>
+            <span><b>2</b> The browser walks up, re-checking anchors.</span>
+            <span><b>3</b> In Chrome, anchors that style inside restyle from one shared list.</span>
+          </figcaption>
+        </figure>
+      </div>
+
+      <dl class="titleblock">
+        <div class="tb tb--title"><dt>Title</dt><dd>How browsers re-check <code>:has()</code></dd></div>
+        <div class="tb tb--author"><dt>Drawn by</dt><dd><img src="https://github.com/jh3y.png?size=128" alt="" width="44" height="44"><span>Jhey Tompkins</span></dd></div>
+        <div class="tb"><dt>Engines</dt><dd>Blink · Gecko · WebKit</dd></div>
+        <div class="tb"><dt>Verified</dt><dd>Blink @ dc5f947 · measured in Chrome 156, Firefox 157, WebKit 27.2</dd></div>
+        <div class="tb"><dt>Date</dt><dd><time datetime="2026-11-05">2026-11-05</time></dd></div>
+        <div class="tb"><dt>Scale</dt><dd>NTS</dd></div>
+        <div class="tb"><dt>Sheet</dt><dd>01 / 11</dd></div>
+        <div class="tb"><dt>Rev</dt><dd>B</dd></div>
+      </dl>
+    </header>
+
+    <!-- ============================== SHEET 02 ============================== -->
+    <section class="sheet" id="notes" aria-labelledby="notes-h">
+      <div class="strip"><span class="strip__no">02</span><span class="strip__title">General notes</span><span class="strip__ref">HAS-001 · Sheet 02 / 11</span></div>
+      <h2 id="notes-h">General notes</h2>
+      <p class="sub">Every note is tagged with the browsers it applies to.</p>
+      <ol class="notes">
+        <li><span class="eng eng--all">All browsers</span> When something changes, the browser walks <b>up</b> from the changed element and re-checks the <code>:has()</code> anchors above it whose rules the change touches.</li>
+        <li><span class="eng eng--all">All browsers</span> A rule that styles <b>its own anchor</b> restyles one element per re-check.</li>
+        <li><span class="eng eng--all">All browsers</span> A rule that styles <b>things inside its anchor</b> restyles its targets under that anchor. Even when the match didn’t change.</li>
+        <li><span class="eng eng--chrome">Chrome</span> Re-checks <b>every</b> anchor above the change, whether or not its rule mentions it. For pseudo-class changes, any anchor whose <code>:has()</code> has a pseudo-class.</li>
+        <li><span class="eng eng--chrome">Chrome</span> Merges the targets of every rule that styles inside its anchor into <b>one shared list</b>, and each re-checked anchor restyles all of it. One <code>*</code> makes the list “everything”.</li>
+        <li><span class="eng eng--all">All browsers</span> So the expensive shape is a <b>big anchor</b> (<code>body</code>, <code>main</code>, a page wrapper) with a rule that <b>styles things inside it</b>. Scoping helps everywhere; Chrome gains the most.</li>
+      </ol>
+      <p class="fine"><span class="eng eng--all">All browsers</span> means Chrome, Firefox and Safari. <span class="eng eng--chrome">Chrome</span> also covers the other Chromium browsers: Edge, Arc, Opera and friends. Simplified for clarity: with <code>:has(+ …)</code> and <code>:has(~ …)</code>, the walk also visits earlier siblings.</p>
+    </section>
+
+    <!-- ============================== SHEET 03 ============================== -->
+    <section class="sheet" id="anatomy" aria-labelledby="anatomy-h">
+      <div class="strip"><span class="strip__no">03</span><span class="strip__title">Anatomy</span><span class="strip__ref">HAS-001 · Sheet 03 / 11</span></div>
+      <h2 id="anatomy-h">Anatomy of a <code>:has()</code> rule</h2>
+      <p class="sub">Three words do all the work on this site.</p>
+      <dl class="terms">
+        <div class="term term--anchor"><dt>Anchor</dt><dd>The element the <code>:has()</code> is attached to.</dd></div>
+        <div class="term term--cond"><dt>Condition</dt><dd>What’s inside the parentheses. It’s what the browser listens for.</dd></div>
+        <div class="term term--target"><dt>Target</dt><dd>What the rule actually styles: the anchor itself, or something inside it.</dd></div>
+      </dl>
+      <div class="anatomy">
+        <figure class="spec">
+          <figcaption><span class="spec__no">Fig. 1</span> Styles itself</figcaption>
+          <p class="selector"><span class="part part--anchor" data-label="anchor = target">.tab</span><span class="punc">:has(</span><span class="part part--cond" data-label="condition">.category-item.active</span><span class="punc">)</span></p>
+          <p class="spec__verdict">The target <em>is</em> the anchor, so a re-check restyles one element.</p>
+        </figure>
+        <figure class="spec">
+          <figcaption><span class="spec__no">Fig. 2</span> Styles inside</figcaption>
+          <p class="selector"><span class="part part--anchor" data-label="anchor">.tab</span><span class="punc">:has(</span><span class="part part--cond" data-label="condition">.category-item.active</span><span class="punc">)</span>&nbsp;<span class="part part--target" data-label="target">button</span></p>
+          <p class="spec__verdict">The target is inside the anchor, so a re-check restyles the targets under the anchor. In Chrome, every such rule’s targets.</p>
+        </figure>
+      </div>
+      <p class="fine">Chromium’s names for these are “subject” and “non-subject” <code>:has()</code>.</p>
+    </section>
+
+    <!-- ============================== SHEET 04 ============================== -->
+    <section class="sheet" id="process" aria-labelledby="process-h">
+      <div class="strip"><span class="strip__no">04</span><span class="strip__title">The process</span><span class="strip__ref">HAS-001 · Sheet 04 / 11</span></div>
+      <h2 id="process-h">What happens on every change</h2>
+      <p class="sub">Every browser runs the same loop. The red notes are where Chrome does more. Pick a change to light up its path.</p>
+
+      <div class="process">
+      <div class="trace" data-trace>
+        <div class="trace__head">
+          <h3>Follow one change</h3>
+          <button type="button" class="ex-btn ex-btn--play trace__play">▶ Play</button>
+        </div>
+        <div class="trace__tabs" role="tablist" aria-label="Example changes">
+          <button type="button" class="ex-tab" role="tab" aria-selected="true" data-trace-tab="anchor" aria-controls="trace-anchor"><span class="ex-tab__name">Mark the anchor</span></button>
+          <button type="button" class="ex-tab" role="tab" aria-selected="false" tabindex="-1" data-trace-tab="inside" aria-controls="trace-inside"><span class="ex-tab__name">Mark targets inside</span></button>
+          <button type="button" class="ex-tab" role="tab" aria-selected="false" tabindex="-1" data-trace-tab="none" aria-controls="trace-none"><span class="ex-tab__name">Nothing to do</span></button>
+          <button type="button" class="ex-tab" role="tab" aria-selected="false" tabindex="-1" data-trace-tab="chrome" aria-controls="trace-chrome"><span class="ex-tab__name">Chrome: an unrelated anchor</span></button>
+          <button type="button" class="ex-tab" role="tab" aria-selected="false" tabindex="-1" data-trace-tab="all" aria-controls="trace-all"><span class="ex-tab__name">Whole chart</span></button>
+        </div>
+
+        <div class="trace__panel" role="tabpanel" id="trace-anchor" data-trace-panel="anchor" data-path="start e-start-d1 d1 e-d1-yes d2 e-d2-yes step e-step-d3 d3 e-d3-yes d4 e-d4-anchor mark-anchor e-loop-anchor e-loop-join e-loop-bus e-d3-no e-d2-no end">
+          <p class="trace__rule">The rule: <code>.tab:has(.category-item.active)</code>. It styles <code>.tab</code> itself.</p>
+          <ol>
+            <li data-step="start"><span class="trace__ref">Start</span><span><code>.active</code> is added to a <code>.category-item</code>.</span></li>
+            <li data-step="d1"><span class="trace__ref">D1</span><span><code>.active</code> is in the rule’s condition. Yes, so start walking.</span></li>
+            <li data-step="d2"><span class="trace__ref">D2</span><span>The item has a parent: <code>.tab</code>. Step up to it.</span></li>
+            <li data-step="d3"><span class="trace__ref">D3</span><span><code>.tab</code> is the rule’s anchor. Yes.</span></li>
+            <li data-step="d4"><span class="trace__ref">D4</span><span>The rule styles the anchor, so mark <code>.tab</code>.</span></li>
+            <li data-step="e-loop-bus"><span class="trace__ref">Loop</span><span>Keep walking up through <code>main</code>, <code>body</code> and <code>html</code>. None of them anchor the rule.</span></li>
+            <li data-step="end"><span class="trace__ref">End</span><span><code>html</code> has no parent, so restyle everything marked: just <code>.tab</code>.</span></li>
+          </ol>
+        </div>
+
+        <div class="trace__panel" role="tabpanel" id="trace-inside" data-trace-panel="inside" data-path="start e-start-d1 d1 e-d1-yes d2 e-d2-yes step e-step-d3 d3 e-d3-no e-loop-bus e-d3-yes d4 e-d4-inside mark-inside e-loop-inside e-loop-join e-d2-no end" hidden>
+          <p class="trace__rule">The rule: <code>main:has(.category-item.active) button</code>. It styles the buttons inside <code>main</code>.</p>
+          <ol>
+            <li data-step="start"><span class="trace__ref">Start</span><span><code>.active</code> is added to a <code>.category-item</code>.</span></li>
+            <li data-step="d1"><span class="trace__ref">D1</span><span><code>.active</code> is in the rule’s condition. Yes, so start walking.</span></li>
+            <li data-step="d2"><span class="trace__ref">D2</span><span>Step up to the item’s parent, <code>.tab</code>.</span></li>
+            <li data-step="e-d3-no"><span class="trace__ref">D3</span><span><code>.tab</code> doesn’t anchor the rule. No, so keep walking.</span></li>
+            <li data-step="d2"><span class="trace__ref">D2</span><span>Step up to <code>main</code>.</span></li>
+            <li data-step="d3"><span class="trace__ref">D3</span><span><code>main</code> is the rule’s anchor. Yes.</span></li>
+            <li data-step="d4"><span class="trace__ref">D4</span><span>The rule styles things inside, so mark every <code>button</code> in <code>main</code>.</span></li>
+            <li data-step="end"><span class="trace__ref">End</span><span>Past <code>body</code> and <code>html</code>, restyle everything marked: every button in the page, near the change or not.</span></li>
+          </ol>
+        </div>
+
+        <div class="trace__panel" role="tabpanel" id="trace-none" data-trace-panel="none" data-path="start e-start-d1 d1 e-d1-no nothing" hidden>
+          <p class="trace__rule">The rule: <code>.tab:has(.category-item.active)</code>.</p>
+          <ol>
+            <li data-step="start"><span class="trace__ref">Start</span><span><code>.open</code> is added to a <code>.category-item</code>.</span></li>
+            <li data-step="d1"><span class="trace__ref">D1</span><span><code>.open</code> isn’t in any <code>:has()</code> condition. No.</span></li>
+            <li data-step="nothing"><span class="trace__ref">End</span><span>Nothing to do: no walk, nothing marked, nothing restyled.</span></li>
+          </ol>
+        </div>
+
+        <div class="trace__panel" role="tabpanel" id="trace-chrome" data-trace-panel="chrome" data-path="start e-start-d1 d1 e-d1-yes d2 e-d2-yes step e-step-d3 d3 e-d3-yes d4 e-d4-anchor mark-anchor e-loop-anchor e-loop-join e-loop-bus e-d3-no e-d2-no end chrome-d3" hidden>
+          <p class="trace__rule">Two rules: <code>.tab:has(.category-item.active)</code> and <code>main:has(.promo)</code>. Both style their anchor.</p>
+          <ol>
+            <li data-step="start"><span class="trace__ref">Start</span><span><code>.active</code> is added to a <code>.category-item</code>.</span></li>
+            <li data-step="d1"><span class="trace__ref">D1</span><span><code>.active</code> is in <code>.tab</code>’s condition. Yes, so start walking.</span></li>
+            <li data-step="mark-anchor"><span class="trace__ref">D2–D4</span><span>Step up to <code>.tab</code>. It anchors that rule and styles itself, so mark <code>.tab</code>.</span></li>
+            <li data-step="chrome-d3"><span class="trace__ref">D3</span><span>Step up to <code>main</code>. Its rule is about <code>.promo</code>, not <code>.active</code>. Firefox and Safari say no. Chrome says yes: any anchor counts.</span></li>
+            <li data-step="d4"><span class="trace__ref">D4</span><span>In Chrome, <code>main</code>’s rule styles <code>main</code> itself, so mark <code>main</code> too.</span></li>
+            <li data-step="end"><span class="trace__ref">End</span><span>Chrome restyles <code>.tab</code> and <code>main</code>. Firefox and Safari restyle just <code>.tab</code>.</span></li>
+          </ol>
+        </div>
+
+        <div class="trace__panel" role="tabpanel" id="trace-all" data-trace-panel="all" data-path="" hidden>
+          <p class="trace__rule">The whole loop, every path at once. Point at any box to light up where it leads and what leads to it.</p>
+        </div>
+      </div>
+
+      <div class="flow-wrap">
+        <svg class="flow" viewBox="0 0 920 1016" role="img" aria-labelledby="flow-title flow-desc">
+          <title id="flow-title">Flowchart: what a browser does when something changes that a :has() rule might care about</title>
+          <desc id="flow-desc">Something changes. If it isn’t mentioned in any :has() condition, there’s nothing to do. Otherwise the browser checks whether there’s a parent to step up to. If not, because the walk is past the html element, it restyles everything that was marked. If there is, it steps up to the parent and asks whether this element is the anchor of one of those rules (Chrome counts any anchor, whatever its rule says; for :hover and friends, any anchor whose :has() has a pseudo-class). If not, it keeps walking up. If it is, it asks what that rule styles: the anchor itself, so mark the anchor; or things inside it, so mark its targets inside the anchor (Chrome marks every such rule’s targets). Then it keeps walking up. Nothing checks whether the match actually changed.</desc>
+
+          <g data-f="start">
+            <rect class="f-shape f-term" x="200" y="24" width="520" height="72" rx="36"/>
+            <text class="f-text f-caps" x="460" y="56" text-anchor="middle">Something changes</text>
+            <text class="f-small" x="460" y="80" text-anchor="middle">class · attribute · state like :hover · element added or removed</text>
+          </g>
+          <g data-f="e-start-d1"><path class="f-line" d="M460 96 V126" marker-end="url(#arrow)"/></g>
+
+          <g data-f="d1">
+            <polygon class="f-shape f-dec" points="460,130 660,196 460,262 260,196"/>
+            <text class="f-ref" x="258" y="148">D1</text>
+            <text class="f-text" x="460" y="191" text-anchor="middle">Is it mentioned in</text>
+            <text class="f-text" x="460" y="213" text-anchor="middle">any :has() condition?</text>
+          </g>
+          <g data-f="e-d1-no">
+            <path class="f-line" d="M660 196 H714" marker-end="url(#arrow)"/>
+            <text class="f-label" x="670" y="186">NO</text>
+          </g>
+          <g data-f="nothing">
+            <rect class="f-shape f-term f-term--quiet" x="718" y="166" width="182" height="60" rx="30"/>
+            <text class="f-text" x="809" y="201" text-anchor="middle">Nothing to do</text>
+          </g>
+          <g data-f="e-d1-yes">
+            <path class="f-line" d="M460 262 V296" marker-end="url(#arrow)"/>
+            <text class="f-label" x="472" y="286">YES</text>
+          </g>
+
+          <g data-f="d2">
+            <polygon class="f-shape f-dec" points="460,300 640,362 460,424 280,362"/>
+            <text class="f-ref" x="278" y="318">D2</text>
+            <text class="f-text" x="460" y="357" text-anchor="middle">Is there a parent</text>
+            <text class="f-text" x="460" y="379" text-anchor="middle">to step up to?</text>
+          </g>
+          <g data-f="e-d2-no">
+            <path class="f-line" d="M640 362 H690" marker-end="url(#arrow)"/>
+            <text class="f-label" x="650" y="352">NO</text>
+          </g>
+          <g data-f="end">
+            <rect class="f-shape f-term" x="694" y="322" width="218" height="80" rx="40"/>
+            <text class="f-text" x="803" y="358" text-anchor="middle">Restyle everything</text>
+            <text class="f-text" x="803" y="380" text-anchor="middle">that was marked</text>
+            <text class="f-small" x="803" y="424" text-anchor="middle">the walk is past &lt;html&gt;</text>
+          </g>
+          <g data-f="e-d2-yes">
+            <path class="f-line" d="M460 424 V456" marker-end="url(#arrow)"/>
+            <text class="f-label" x="472" y="446">YES</text>
+          </g>
+
+          <g data-f="step">
+            <rect class="f-shape f-proc" x="290" y="460" width="340" height="60"/>
+            <text class="f-text f-strong" x="460" y="495" text-anchor="middle">Step up to the parent</text>
+          </g>
+          <g data-f="e-step-d3"><path class="f-line" d="M460 520 V552" marker-end="url(#arrow)"/></g>
+
+          <!-- note: every browser (never dimmed) -->
+          <rect class="f-note" x="676" y="446" width="232" height="128"/>
+          <text class="f-note-text" x="692" y="472">NOTE · ALL BROWSERS</text>
+          <text class="f-note-text f-note-text--body" x="692" y="496">Nothing here checks if</text>
+          <text class="f-note-text f-note-text--body" x="692" y="518">the match really changed.</text>
+          <text class="f-note-text f-note-text--body" x="692" y="540">Everything marked is</text>
+          <text class="f-note-text f-note-text--body" x="692" y="562">restyled either way.</text>
+
+          <g data-f="d3">
+            <polygon class="f-shape f-dec" points="460,556 660,620 460,684 260,620"/>
+            <text class="f-ref" x="258" y="576">D3</text>
+            <text class="f-text" x="460" y="615" text-anchor="middle">Is this element the anchor</text>
+            <text class="f-text" x="460" y="637" text-anchor="middle">of one of those rules?</text>
+          </g>
+          <g data-f="e-d3-no">
+            <path class="f-line f-line--loop" d="M260 620 H24"/>
+            <circle class="f-dot" cx="24" cy="620" r="4"/>
+            <text class="f-label" x="222" y="610">NO</text>
+          </g>
+          <g data-f="e-d3-yes">
+            <path class="f-line" d="M460 684 V716" marker-end="url(#arrow)"/>
+            <text class="f-label" x="472" y="706">YES</text>
+          </g>
+
+          <g data-f="chrome-d3">
+            <path class="f-leader f-leader--chrome" d="M660 620 H674"/>
+            <rect class="f-note f-note--chrome" x="674" y="590" width="236" height="156"/>
+            <text class="f-note-text f-note-text--chrome" x="690" y="616">CHROME</text>
+            <text class="f-note-text f-note-text--body" x="690" y="640">Any anchor counts,</text>
+            <text class="f-note-text f-note-text--body" x="690" y="662">whatever its rule says.</text>
+            <text class="f-note-text f-note-text--body" x="690" y="688">For :hover and friends,</text>
+            <text class="f-note-text f-note-text--body" x="690" y="710">any anchor whose :has()</text>
+            <text class="f-note-text f-note-text--body" x="690" y="732">has a pseudo-class.</text>
+          </g>
+
+          <g data-f="d4">
+            <polygon class="f-shape f-dec" points="460,720 650,788 460,856 270,788"/>
+            <text class="f-ref" x="268" y="738">D4</text>
+            <text class="f-text" x="460" y="783" text-anchor="middle">What does</text>
+            <text class="f-text" x="460" y="805" text-anchor="middle">that rule style?</text>
+          </g>
+          <g data-f="e-d4-anchor">
+            <path class="f-line" d="M270 788 H210 V884" marker-end="url(#arrow)"/>
+            <text class="f-label" x="262" y="778" text-anchor="end">THE ANCHOR</text>
+          </g>
+          <g data-f="e-d4-inside">
+            <path class="f-line" d="M650 788 H725 V884" marker-end="url(#arrow)"/>
+            <text class="f-label" x="658" y="778">THINGS INSIDE</text>
+          </g>
+
+          <g data-f="mark-anchor">
+            <rect class="f-shape f-proc f-proc--self" x="60" y="888" width="300" height="72"/>
+            <text class="f-text f-strong" x="210" y="920" text-anchor="middle">Mark the anchor</text>
+            <text class="f-small" x="210" y="943" text-anchor="middle">one element</text>
+          </g>
+          <g data-f="mark-inside">
+            <rect class="f-shape f-proc f-proc--inside" x="540" y="888" width="370" height="72"/>
+            <text class="f-text f-strong" x="725" y="920" text-anchor="middle">Mark its targets inside it</text>
+            <text class="f-small f-small--chrome" x="725" y="943" text-anchor="middle">Chrome: every such rule’s targets</text>
+          </g>
+
+          <g data-f="e-loop-anchor"><path class="f-line f-line--loop" d="M210 960 V996"/></g>
+          <g data-f="e-loop-inside"><path class="f-line f-line--loop" d="M725 960 V996 H210"/></g>
+          <g data-f="e-loop-join"><path class="f-line f-line--loop" d="M210 996 H24"/></g>
+          <g data-f="e-loop-bus">
+            <path class="f-line f-line--loop" d="M24 996 V362 H276" marker-end="url(#arrow)"/>
+            <text class="f-loop-label" transform="translate(16 846) rotate(-90)">keep walking up</text>
+          </g>
+        </svg>
+      </div>
+      </div>
+      <p class="fine">D3 is where browsers differ most: Firefox and Safari only re-check anchors whose own rule mentions the change.</p>
+    </section>
+
+    <!-- ============================== SHEET 05 ============================== -->
+    <section class="sheet lesson" id="shape" aria-labelledby="shape-h">
+      <div class="strip"><span class="strip__no">05</span><span class="strip__title">Lesson 1 · Rule shape</span><span class="strip__ref">HAS-001 · Sheet 05 / 11</span></div>
+      <h2 id="shape-h">What the rule styles sets the blast radius</h2>
+      <p class="sub"><span class="eng eng--all">All browsers</span> One change, four rules, one rule at a time. Every browser gives the same answer here: try the switch.</p>
+      <ul class="lesson-points">
+        <li><b>Styles itself:</b> one element, however big the anchor. <span class="codes">1A · 1C</span></li>
+        <li><b>Styles inside:</b> its targets inside the anchor, near the change or not. <span class="codes">1B · 1D</span></li>
+        <li><b>A big anchor that styles inside</b> is the shape that sweeps the page. <span class="codes">1D</span></li>
+      </ul>
+      <div class="explorer" data-scenarios="1A,1B,1C,1D" data-name="Lesson 1"><noscript><p class="fine">The interactive drawing needs JavaScript.</p></noscript></div>
+    </section>
+
+    <!-- ============================== SHEET 06 ============================== -->
+    <section class="sheet lesson" id="shared" aria-labelledby="shared-h">
+      <div class="strip"><span class="strip__no">06</span><span class="strip__title">Lesson 2 · Chrome’s extra work</span><span class="strip__ref">HAS-001 · Sheet 06 / 11</span></div>
+      <h2 id="shared-h">Chrome re-checks more, and shares the list</h2>
+      <p class="sub"><span class="eng eng--chrome">Chrome</span> Two rules on the page this time. Flip the switch: Firefox and Safari skip all three of these.</p>
+      <ul class="lesson-points">
+        <li><b>Re-checks unrelated anchors:</b> ones whose rule doesn’t mention the change. <span class="codes">2A</span></li>
+        <li><b>Shares one list:</b> a re-checked anchor restyles every such rule’s targets. <span class="codes">2B</span></li>
+        <li><b>One <code>*</code> anywhere</b> makes that list “everything”. <span class="codes">2C</span></li>
+      </ul>
+      <div class="explorer" data-scenarios="2A,2B,2C" data-name="Lesson 2"><noscript><p class="fine">The interactive drawing needs JavaScript.</p></noscript></div>
+    </section>
+
+    <!-- ============================== SHEET 07 ============================== -->
+    <section class="sheet lesson" id="pseudo" aria-labelledby="pseudo-h">
+      <div class="strip"><span class="strip__no">07</span><span class="strip__title">Lesson 3 · Pseudo-classes</span><span class="strip__ref">HAS-001 · Sheet 07 / 11</span></div>
+      <h2 id="pseudo-h">Chrome’s pseudo-class filter</h2>
+      <p class="sub"><span class="eng eng--chrome">Chrome</span> For <code>:hover</code>, <code>:checked</code>, <code>:focus</code> and friends.</p>
+      <ul class="lesson-points">
+        <li><b>No pseudo-class in an anchor’s <code>:has()</code>:</b> Chrome skips it. <span class="codes">3A</span></li>
+        <li><b>Any pseudo-class in it:</b> Chrome re-checks it, even a different one. <span class="codes">3B</span></li>
+        <li><b>Firefox and Safari</b> only re-check rules that mention the pseudo-class that changed.</li>
+      </ul>
+      <div class="explorer" data-scenarios="3A,3B" data-name="Lesson 3"><noscript><p class="fine">The interactive drawing needs JavaScript.</p></noscript></div>
+    </section>
+
+    <!-- ============================== SHEET 08 ============================== -->
+    <section class="sheet lesson" id="direction" aria-labelledby="direction-h">
+      <div class="strip"><span class="strip__no">08</span><span class="strip__title">Lesson 4 · Direction</span><span class="strip__ref">HAS-001 · Sheet 08 / 11</span></div>
+      <h2 id="direction-h">It only walks up</h2>
+      <p class="sub"><span class="eng eng--all">All browsers</span> The same in every browser.</p>
+      <ul class="lesson-points">
+        <li><b>The walk only goes up</b> from the element that changed.</li>
+        <li><b>Anchors that aren’t above it are never visited,</b> whatever their rules say. <span class="codes">4A</span></li>
+      </ul>
+      <div class="explorer" data-scenarios="4A" data-name="Lesson 4"><noscript><p class="fine">The interactive drawing needs JavaScript.</p></noscript></div>
+    </section>
+
+    <!-- ============================== SHEET 09 ============================== -->
+    <section class="sheet" id="measured" aria-labelledby="measured-h">
+      <div class="strip"><span class="strip__no">09</span><span class="strip__title">Measured</span><span class="strip__ref">HAS-001 · Sheet 09 / 11</span></div>
+      <h2 id="measured-h">Measured in Chrome, Firefox and Safari</h2>
+      <p class="sub">The spec only defines what <code>:has()</code> matches. How a browser works out what to restyle after a change is up to the browser, so we ran the same tests in all three. <code>main</code> holds 20,000 <code>.nav-link</code>s, so any sweep of <code>main</code> is easy to spot.</p>
+      <div class="split">
+        <div class="split__col split__col--all">
+          <h3>Every browser</h3>
+          <ul>
+            <li>A change that touches a rule’s condition (a class, attribute or pseudo-class in it, or a matching element added or removed) re-checks that rule’s anchors and restyles its targets. <b>Even when the match doesn’t change.</b></li>
+            <li>So a big anchor that styles things inside it is expensive everywhere. Firefox and Safari spent longer on those restyles than Chrome did.</li>
+          </ul>
+        </div>
+        <div class="split__col split__col--chromium">
+          <h3>Chrome only</h3>
+          <ul>
+            <li>Re-checking anchors whose rule doesn’t mention the change.</li>
+            <li>The shared list: one rule’s targets restyled by another anchor’s re-check.</li>
+            <li>Any pseudo-class in an anchor’s <code>:has()</code> being enough.</li>
+            <li>A <code>*</code> in one rule widening every other anchor’s re-check.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="matrix-wrap">
+        <table class="matrix">
+          <caption>Milliseconds per change · bars compare each browser with its own control row</caption>
+          <thead>
+            <tr><th scope="col">Change</th><th scope="col">Chrome 156</th><th scope="col">Firefox 157</th><th scope="col">Safari · WebKit 27.2</th></tr>
+          </thead>
+          <tbody>
+            <tr class="matrix__group"><th colspan="4" scope="rowgroup">Chrome only</th></tr>
+            <tr><th scope="row">Class change; <code>main</code>’s rule is about something else<small>Lesson 2 · 2A</small></th><td class="hot" style="--p: 0.75"><i class="cell-bar"></i>12.9</td><td style="--p: 0"><i class="cell-bar"></i>≈0</td><td style="--p: 0"><i class="cell-bar"></i>≈0</td></tr>
+            <tr><th scope="row"><code>main</code>’s match flips; a rule elsewhere targets <code>.nav-link</code><small>Lesson 2 · 2B · without that rule: 0.24, 0.60, 1.57</small></th><td class="hot" style="--p: 0.54"><i class="cell-bar"></i>9.3</td><td style="--p: 0.013"><i class="cell-bar"></i>0.57</td><td style="--p: 0.022"><i class="cell-bar"></i>1.45</td></tr>
+            <tr><th scope="row"><code>:checked</code> change; <code>main:has(:focus-visible)</code><small>Lesson 3 · 3B</small></th><td class="hot" style="--p: 0.71"><i class="cell-bar"></i>12.1</td><td style="--p: 0"><i class="cell-bar"></i>≈0</td><td style="--p: 0"><i class="cell-bar"></i>≈0</td></tr>
+            <tr><th scope="row">A trailing <code>*</code> on a different rule<small>Lesson 2 · 2C</small></th><td class="hot" style="--p: 0.59"><i class="cell-bar"></i>10.1</td><td style="--p: 0.006"><i class="cell-bar"></i>0.25</td><td style="--p: 0.005"><i class="cell-bar"></i>0.35</td></tr>
+            <tr class="matrix__group"><th colspan="4" scope="rowgroup">Every browser</th></tr>
+            <tr><th scope="row">Toggle <code>.promo</code> on a second element; <code>main:has(.promo) .nav-link</code> already matches<small>no flip</small></th><td class="hot" style="--p: 0.73"><i class="cell-bar"></i>12.4</td><td class="hot" style="--p: 0.87"><i class="cell-bar"></i>39.1</td><td class="hot" style="--p: 0.68"><i class="cell-bar"></i>44.7</td></tr>
+            <tr><th scope="row">Add or remove a second <code>.promo</code>; <code>main</code> already matches<small>no flip</small></th><td class="hot" style="--p: 0.72"><i class="cell-bar"></i>12.4</td><td class="hot" style="--p: 0.87"><i class="cell-bar"></i>39.0</td><td class="hot" style="--p: 0.67"><i class="cell-bar"></i>43.9</td></tr>
+            <tr><th scope="row">Control: <code>main</code>’s match really flips<small>all 20,000 links change colour</small></th><td class="hot" style="--p: 1"><i class="cell-bar"></i>17.1</td><td class="hot" style="--p: 1"><i class="cell-bar"></i>45.1</td><td class="hot" style="--p: 1"><i class="cell-bar"></i>65.6</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="fine">Chrome 156 is the stable release, run directly; Chrome Canary 159 matched it within half a millisecond on every row. Firefox 157 and WebKit 27.2 are Playwright’s builds of those engines; WebKit 27.2 is a little ahead of the shipping Safari 26.6. Measured November 2026. Each link has an inline style, so no browser can share one computed style between them. Each figure is the median of five batches of 40 changes, with a full style and layout update after every change. Pseudo-class rows use <code>:checked</code>, because a script can’t fake a real hover. Firefox and Safari do skip some insertions that can’t change the result, like a match added right next to an existing one. Compare within a column: absolute numbers vary by browser and machine.</p>
+    </section>
+
+    <!-- ============================== SHEET 10 ============================== -->
+    <section class="sheet" id="rules" aria-labelledby="rules-h">
+      <div class="strip"><span class="strip__no">10</span><span class="strip__title">Rules of thumb</span><span class="strip__ref">HAS-001 · Sheet 10 / 11</span></div>
+      <h2 id="rules-h">Rules of thumb</h2>
+      <p class="sub">Every one of these helps in every browser. Chrome gains the most, because it re-checks more anchors and shares one to-do list.</p>
+      <ol class="thumbs">
+        <li>
+          <h3>Prefer rules that style the anchor itself</h3>
+          <p><code>.card:has(.badge) { … }</code> restyles one element per re-check, wherever it lives.</p>
+          <p class="card-eng"><span class="eng eng--all">Helps everywhere</span></p>
+        </li>
+        <li>
+          <h3>Anchor on the smallest element you can</h3>
+          <p>The smallest element that contains both the condition and the target: fewer changes reach it, and less sits under it.</p>
+          <p class="card-eng"><span class="eng eng--all">Helps everywhere</span><span class="eng eng--chrome">Chrome gains most</span></p>
+        </li>
+        <li>
+          <h3>Keep big anchors from styling inside</h3>
+          <p>No <code>body</code>, <code>html</code>, <code>main</code> or page wrapper anchoring a rule that styles things inside it. Put the state on the root as an attribute, written by the code that changes it: <code>html[data-menu-open] .header { … }</code>.</p>
+          <p class="card-eng"><span class="eng eng--all">Helps everywhere</span><span class="eng eng--chrome">Chrome gains most</span></p>
+        </li>
+        <li>
+          <h3>No trailing <code>*</code></h3>
+          <p>A <code>*</code> target restyles the anchor’s whole subtree on every re-check. In Chrome it widens every other anchor’s re-check too.</p>
+          <p class="card-eng"><span class="eng eng--all">Helps everywhere</span><span class="eng eng--chrome">Chrome gains most</span></p>
+        </li>
+        <li>
+          <h3>Count your <code>:has()</code> rules together</h3>
+          <p>Each rule adds re-checks. In Chrome they also share one to-do list, so count them as a set, especially in global stylesheets.</p>
+          <p class="card-eng"><span class="eng eng--all">Helps everywhere</span><span class="eng eng--chrome">Chrome gains most</span></p>
+        </li>
+        <li>
+          <h3>Check it</h3>
+          <p>Chrome: DevTools → Performance → record the interaction → <b>Recalculate Style</b> → <b>Elements affected</b>. Safari’s Timelines and the Firefox Profiler show style recalculations too.</p>
+          <p class="card-eng"><span class="eng eng--all">Every browser</span></p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ============================== SHEET 11 ============================== -->
+    <section class="sheet" id="sources" aria-labelledby="sources-h">
+      <div class="strip"><span class="strip__no">11</span><span class="strip__title">Sources</span><span class="strip__ref">HAS-001 · Sheet 11 / 11</span></div>
+      <h2 id="sources-h">Sources</h2>
+      <p class="sub">Chrome’s behaviour comes from Chromium’s source at <code>dc5f947</code>, November 2026. Firefox’s and Safari’s comes from measuring them.</p>
+      <ul class="sources">
+        <li><a href="https://www.w3.org/TR/selectors-4/#relational" target="_blank" rel="noopener">Selectors Level 4 · <code>:has()</code></a><span>The spec: what <code>:has()</code> matches. How browsers invalidate it is up to them.</span></li>
+        <li><a href="https://github.com/chromium/chromium/blob/dc5f94700f3bf024c0ed3827719fd729e9b029c7/third_party/blink/renderer/core/css/style_engine.cc#L1585" target="_blank" rel="noopener"><code>style_engine.cc</code> L1585</a><span>Chrome: pseudo-class walks skip anchors with no pseudo-class in their <code>:has()</code>.</span></li>
+        <li><a href="https://github.com/chromium/chromium/blob/dc5f94700f3bf024c0ed3827719fd729e9b029c7/third_party/blink/renderer/core/css/style_engine.cc#L1591" target="_blank" rel="noopener"><code>style_engine.cc</code> L1591</a><span>Chrome: “mutation of class value ‘d’ can invalidate ancestor with class value ‘a’”, no per-rule filtering.</span></li>
+        <li><a href="https://github.com/chromium/chromium/blob/dc5f94700f3bf024c0ed3827719fd729e9b029c7/third_party/blink/renderer/core/css/style_engine.cc#L1595" target="_blank" rel="noopener"><code>style_engine.cc</code> L1595</a><span>Chrome: styles itself, so restyle the anchor.</span></li>
+        <li><a href="https://github.com/chromium/chromium/blob/dc5f94700f3bf024c0ed3827719fd729e9b029c7/third_party/blink/renderer/core/css/style_engine.cc#L1605" target="_blank" rel="noopener"><code>style_engine.cc</code> L1605</a><span>Chrome: styles inside, so apply one invalidation set for the whole <code>:has</code> pseudo-class.</span></li>
+        <li><a href="https://github.com/chromium/chromium/blob/dc5f94700f3bf024c0ed3827719fd729e9b029c7/third_party/blink/renderer/core/css/invalidation/rule_invalidation_data.h#L234" target="_blank" rel="noopener"><code>rule_invalidation_data.h</code> L234</a><span>Chrome: those sets are kept per pseudo-class type, not per rule.</span></li>
+        <li><a href="https://github.com/chromium/chromium/blob/dc5f94700f3bf024c0ed3827719fd729e9b029c7/third_party/blink/renderer/core/css/style_engine.cc#L2059" target="_blank" rel="noopener"><code>style_engine.cc</code> L2059</a><span>Chrome: where pseudo-class changes start their walk.</span></li>
+        <li><a href="https://github.com/chromium/chromium/blob/dc5f94700f3bf024c0ed3827719fd729e9b029c7/third_party/blink/renderer/core/dom/element.cc#L13571" target="_blank" rel="noopener"><code>element.cc</code> L13571</a><span>Chrome: <code>:hover</code> goes through the same pseudo-class path.</span></li>
+        <li><a href="#measured">Sheet 09 · Measured</a><span>Chrome 156 and Canary 159 alongside Firefox 157 and WebKit 27.2, November 2026.</span></li>
+      </ul>
+      <p class="fine">The drawings simplify the page. Switch any drawing between Chrome and Firefox · Safari to see the difference.</p>
+    </section>
+  </main>
+
+  <footer class="colophon">
+    <img src="https://github.com/jh3y.png?size=128" alt="" width="36" height="36">
+    <p>Drawn by <b>Jhey Tompkins</b> with plain HTML, CSS and SVG.</p>
+    <a href="#top">Back to the top ↑</a>
+  </footer>
+    <script  src="./script.js"></script>
+
+  </body>
+  
+</html>

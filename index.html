@@ -77,9 +77,14 @@ const items = [
   { cat: "effects", dir: "aosanimations", name: "AOS – animacje przy scrollu", author: "michalsnik", pen: "https://codepen.io/michalsnik/pen/WxNdvq", tags: ["obs"] },
   { cat: "effects", dir: "subscribercoaster", name: "Subscriber Coaster", author: "cobra_winfrey", pen: "https://codepen.io/cobra_winfrey/pen/VwYBRvj", tags: ["obs"], note: "Dobry kandydat na nakładkę w OBS." },
   { cat: "effects", dir: "three-dotscss-loading-animations-made-with-single-element", name: "Three Dots – loadery", author: "nzbin", pen: "https://codepen.io/nzbin/pen/GGrXbp", tags: ["obs", "foe"], note: "Wskaźniki ładowania z jednego elementu." },
+  { cat: "effects", dir: "pure-css-border-animation-without-svg", name: "Border Animation (CSS)", author: "Rplus", pen: "https://codepen.io/Rplus/pen/abPLGx", tags: ["obs"], note: "Animowana ramka z jednego elementu, bez SVG." },
+  // Formularze
+  { cat: "forms", dir: "credit-card-payment-form", name: "Credit Card Payment Form", author: "quinlo", pen: "https://codepen.io/quinlo/pen/YONMEa", tags: [], note: "Maski pól (imask.js) i karta SVG zmieniająca się przy wpisywaniu. Niczego nie wysyła.", warn: "Wymaga imask.js 3.4 z CDN (stara wersja)." },
+  // Demo
+  { cat: "demos", dir: "how-browsers-has", name: "how browsers :has()", author: "jh3y", pen: "https://codepen.io/jh3y/pen/xbqmjgW", tags: [], note: "Interaktywne wyjaśnienie, jak przeglądarka obsługuje selektor :has()." },
 ];
 
-const sections = { terminals: "Terminale", effects: "Guziki i efekty" };
+const sections = { terminals: "Terminale", effects: "Guziki i efekty", forms: "Formularze", demos: "Demo i ciekawostki" };
 const main = document.getElementById("main");
 
 function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }

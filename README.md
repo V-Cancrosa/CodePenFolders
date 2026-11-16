@@ -10,7 +10,7 @@ Wszystkie zasługi należą do autorów wymienionych poniżej.
 Jedyna zmiana względem oryginałów: z `dist/index.html` usunięto skrypt `prefixfree.js`
 (dodawał prefiksy CSS dla starych przeglądarek, dziś zbędne, a przy hostingu poza CodePen
 powodował błędy CORS). Dotyczy: Fallout 3 Terminal, Fallout Terminal CSS Theme,
-Animated Back Glow, Hover.css, Modal Animations.
+Animated Back Glow, Hover.css, Modal Animations, Border Animation.
 
 ## Podgląd
 
@@ -57,6 +57,19 @@ Każdy projekt ma ten sam układ:
 | [AOS – animacje przy scrollu](effects/aosanimations) | michalsnik | [pen](https://codepen.io/michalsnik/pen/WxNdvq) | |
 | [Subscriber Coaster](effects/subscribercoaster) | cobra_winfrey | [pen](https://codepen.io/cobra_winfrey/pen/VwYBRvj) | |
 | [Three Dots – loadery](effects/three-dotscss-loading-animations-made-with-single-element) | nzbin | [pen](https://codepen.io/nzbin/pen/GGrXbp) | pełna biblioteka: [nzbin/three-dots](https://github.com/nzbin/three-dots) |
+| [Border Animation (CSS)](effects/pure-css-border-animation-without-svg) | Rplus | [pen](https://codepen.io/Rplus/pen/abPLGx) | źródło w Pug + SCSS |
+
+## Formularze
+
+| Projekt | Autor | Oryginał | Uwagi |
+|---|---|---|---|
+| [Credit Card Payment Form](forms/credit-card-payment-form) | quinlo | [pen](https://codepen.io/quinlo/pen/YONMEa) | wymaga imask.js 3.4 (CDN); tylko UI, niczego nie wysyła |
+
+## Demo i ciekawostki
+
+| Projekt | Autor | Oryginał | Uwagi |
+|---|---|---|---|
+| [how browsers :has()](demos/how-browsers-has) | jh3y | [pen](https://codepen.io/jh3y/pen/xbqmjgW) | interaktywne wyjaśnienie selektora `:has()` |
 
 ## Licencja
 
